@@ -1,0 +1,50 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "ProductList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Product List</div>
+            <a href="/Products/CreateProduct/">+ Create a new product</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var prod in Model)
+                    {
+                        <tr class="text-center">
+                            <td>@prod.ProductId</td>
+                            <td>
+                                <img height="50" src="/productImages/@prod.ImageUrl"/>
+                                &nbsp;
+                                @prod.ProductName
+                            </td>
+                            <td>@prod.Stock</td>
+                            <td>$@prod.Price</td>
+                            <td>@prod.Category.CategoryName</td>
+                            <td>@(prod.Description.Length <= 50 ? prod.Description : prod.Description.Substring(0, 50) + "...")</td>
+                            <td>
+                                <a href="/Products/DeleteProduct/@prod.ProductId" class="btn btn-outline-danger rounded-3">Delete</a>
+                                <a href="/Products/UpdateProduct/@prod.ProductId" class="btn btn-outline-info rounded-3">Update</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
