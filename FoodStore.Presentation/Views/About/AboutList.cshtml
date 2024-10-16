@@ -1,0 +1,40 @@
+﻿@model List<ResultAboutDto>
+@{
+    ViewData["Title"] = "AboutList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">About List</div>
+            <a href="/About/CreateAbout/">+ Create an about section</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var about in Model)
+                    {
+                        <tr class="text-center">
+                            <td>@about.AboutId</td>
+                            <td>@about.AboutTitle</td>
+                            <td>@(about.AboutDescription.Length <= 70 ? about.AboutDescription : about.AboutDescription.Substring(0, 70) + "...")</td>
+                            <td>
+                                <a href="/About/DeleteAbout/@about.AboutId" class="btn btn-outline-danger rounded-3">Delete</a>
+                                <a href="/About/UpdateAbout/@about.AboutId" class="btn btn-outline-info rounded-3">Update</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
