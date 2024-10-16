@@ -13,10 +13,12 @@ builder.Services.AddDbContext<FoodStoreContext>();
 builder.Services.AddScoped<ICategoryDAL, EFCategoryDAL>();
 builder.Services.AddScoped<IProductDAL, EFProductDAL>();
 builder.Services.AddScoped<ISliderDAL, EFSliderDAL>();
+builder.Services.AddScoped<IAboutDAL, EFAboutDAL>();
 
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ISliderService, SliderManager>();
+builder.Services.AddScoped<IAboutService, AboutManager>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
