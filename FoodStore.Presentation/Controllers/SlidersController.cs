@@ -30,8 +30,14 @@ namespace FoodStore.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateSlider([FromForm]CreateSliderDto sliderDto)
+        public async Task<IActionResult> CreateSlider([FromForm] CreateSliderDto sliderDto, IFormFile file)
         {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sliderImages", file.FileName);
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            sliderDto.ImageUrl = file.FileName;
             var value = _mapper.Map<Slider>(sliderDto);
             _sliderService.TInsert(value);
             return RedirectToAction("SliderList");
@@ -51,8 +57,17 @@ namespace FoodStore.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateSlider([FromForm]UpdateSliderDto sliderDto)
+        public async Task<IActionResult> UpdateSlider([FromForm] UpdateSliderDto sliderDto, IFormFile file)
         {
+            if (file is not null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sliderImages", file.FileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                sliderDto.ImageUrl = file.FileName;
+            }
             _sliderService.TUpdate(_mapper.Map<Slider>(sliderDto));
             return RedirectToAction("SliderList");
         }
