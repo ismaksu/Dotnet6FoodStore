@@ -1,0 +1,44 @@
+﻿@model List<ResultSliderDto>
+@{
+    ViewData["Title"] = "SliderList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Slider List</div>
+            <a href="/Sliders/CreateSlider/">+ Create a new slider</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Slider</th>
+                        <th scope="col">Slider Title</th>
+                        <th scope="col">Slider URL</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var slider in Model)
+                    {
+                        <tr class="text-center">
+                            <td>@slider.SliderId</td>
+                            <td>
+                                <img class="rounded-3" height="200" src="/sliderImages/@slider.ImageUrl" />
+                            </td>
+                            <td>@slider.SliderTitle</td>
+                            <td>@(slider.SliderUrl.Length <= 70 ? slider.SliderUrl : slider.SliderUrl.Substring(0, 70) + "...")</td>
+                            <td>
+                                <a href="/Sliders/DeleteSlider/@slider.SliderId" class="btn btn-outline-danger rounded-3">Delete</a>
+                                <a href="/Sliders/UpdateSlider/@slider.SliderId" class="btn btn-outline-info rounded-3">Update</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
