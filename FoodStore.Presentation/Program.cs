@@ -3,11 +3,13 @@ using FoodStore.Business.Concrete;
 using FoodStore.DataAccess.Abstract;
 using FoodStore.DataAccess.Context;
 using FoodStore.DataAccess.EntityFramework;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<FoodStoreContext>();
+
 builder.Services.AddScoped<ICategoryDAL, EFCategoryDAL>();
 builder.Services.AddScoped<IProductDAL, EFProductDAL>();
 builder.Services.AddScoped<ISliderDAL, EFSliderDAL>();
@@ -15,6 +17,8 @@ builder.Services.AddScoped<ISliderDAL, EFSliderDAL>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ISliderService, SliderManager>();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddControllersWithViews();
 
